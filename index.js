@@ -49,7 +49,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
     // Fetch all tags
     await runInWorkspace('git', ['fetch', '--all', '--tags']);
 
-    const latestTag = (await execSync(`git tag -l --sort=-version:refname "`+{$tagPrefix}+`[0-9]*"|head -n 1`)).toString();
+    const latestTag = (await execSync(`git tag -l --sort=-version:refname "`+tagPrefix+`[0-9]*"|head -n 1`)).toString();
 
     let lastBuildNumber = currentBuildNumber;
     if(latestTag != undefined){
