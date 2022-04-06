@@ -117,7 +117,7 @@ function updateBuildNumber(buildNumber) {
   file.buildNumber = `${buildNumber}`;
       
   fs.writeFile(fileName, JSON.stringify(file, null, 2), function writeJSON(err) {
-    if (err) return console.log(err);
+    if (err) return exitFailure(err);
   });
 }
 
