@@ -15,7 +15,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
 (async () => {
   const pkg = getPackageJson();
   const tagPrefix = process.env['INPUT_TAG-PREFIX'] || '';
-  const commitMessage = process.env['INPUT_COMMIT-MESSAGE'] || 'ci: Build Number bump to {{buildNumber}}';
+  const commitMessage = process.env['INPUT_COMMIT-MESSAGE'] || 'CI: Build Number bumped to {{buildNumber}}';
 
   // GIT logic
   try {
@@ -49,10 +49,16 @@ const workspace = process.env.GITHUB_WORKSPACE;
     // Fetch all tags
     await runInWorkspace('git', ['fetch', '--all', '--tags']);
 
-    const latestTag = (await execSync(`git tag -l --sort=-version:refname "build/[0-9]*"|head -n 1`)).toString();
+    const latestTag = (await execSync(`git tag -l --sort=-version:refname "`+{$tagPrefix}+`[0-9]*"|head -n 1`)).toString();
 
-    console.log(`Found latest tag: ${latestTag}`);
-    const lastBuildNumber = latestTag.split("/")[1].trim();
+    let lastBuildNumber = currentBuildNumber;
+    if(latestTag != undefined){
+      console.log(`Found latest tag: ${latestTag}`);
+      lastBuildNumber = latestTag.split("/")[1].trim();
+    } else {
+      console.log(`No tag found matching tag prefix, using build number currently in package.json [${lastBuildNumber}] as lastBuildNumber`);
+    }
+    
     const nextBuildNumber = parseInt(lastBuildNumber) + 1;
     const buildTag = `${tagPrefix}${nextBuildNumber}`;
 
@@ -62,7 +68,6 @@ const workspace = process.env.GITHUB_WORKSPACE;
 
     // now go to the actual branch to perform the same versioning
     if (isPullRequest) {
-      console.log('Step 1.1');
       // First fetch to get updated local version of branch
       await runInWorkspace('git', ['fetch']);
     }
