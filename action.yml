@@ -1,5 +1,5 @@
-name: Automated Version Bump
-description: Automated version bump for npm packages.
+name: Automated Build Number Bump
+description: Automated buildNumber bump for package.json.
 runs:
   using: node12
   main: index.js

@@ -19,7 +19,7 @@ jobs:
         run: cat ./package.json
       - name: 'Automated Build Number Bump'
         id: buildNumber-bump
-        uses: 'colbydimock/gh-action-bump-buildNumber@main'
+        uses: 'Cdimock/gh-action-bump-buildNumber@main'
         with:
           tag-prefix: 'build/'
         env:

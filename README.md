@@ -29,7 +29,7 @@ Make sure you use the `actions/checkout@v2` action!
 Prefix that is used for the git tag  (optional). Example:
 ```yaml
 - name:  'Automated Build Number Bump'
-  uses:  'colbydimock/gh-action-bump-buildNumber@main'
+  uses:  'Cdimock/gh-action-bump-buildNumber@main'
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   with:
@@ -40,7 +40,7 @@ Prefix that is used for the git tag  (optional). Example:
 The tag is not added to the git repository  (optional). Example:
 ```yaml
 - name:  'Automated Build Number Bump'
-  uses:  'colbydimock/gh-action-bump-buildNumber@main'
+  uses:  'Cdimock/gh-action-bump-buildNumber@main'
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   with:
@@ -51,7 +51,7 @@ The tag is not added to the git repository  (optional). Example:
 If true, skip pushing any commits or tags created after the version bump (optional). Example:
 ```yaml
 - name:  'Automated Build Number Bump'
-  uses:  'colbydimock/gh-action-bump-buildNumber@main'
+  uses:  'Cdimock/gh-action-bump-buildNumber@main'
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   with:
@@ -62,7 +62,7 @@ If true, skip pushing any commits or tags created after the version bump (option
 Param to parse the location of the desired package.json (optional). Example:
 ```yaml
 - name:  'Automated Build Number Bump'
-  uses:  'colbydimock/gh-action-bump-buildNumber@main'
+  uses:  'Cdimock/gh-action-bump-buildNumber@main'
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     PACKAGEJSON_DIR:  'frontend'
@@ -72,7 +72,7 @@ Param to parse the location of the desired package.json (optional). Example:
 Set a custom target branch to use when bumping the version. Useful in cases such as updating the version on main after a tag has been set (optional). Example:
 ```yaml
 - name:  'Automated Build Number Bump'
-  uses:  'colbydimock/gh-action-bump-buildNumber@main'
+  uses:  'Cdimock/gh-action-bump-buildNumber@main'
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   with:
@@ -83,7 +83,7 @@ Set a custom target branch to use when bumping the version. Useful in cases such
 Set a custom commit message for version bump commit. Useful for skipping additional workflows run on push. Example:
 ```yaml
 - name:  'Automated Build Number Bump'
-  uses:  'colbydimock/gh-action-bump-buildNumber@main'
+  uses:  'Cdimock/gh-action-bump-buildNumber@main'
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   with:
