@@ -52,7 +52,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
     const latestTag = (await execSync(`git tag -l --sort=-version:refname "`+tagPrefix+`[0-9]*"|head -n 1`)).toString();
 
     let lastBuildNumber = currentBuildNumber;
-    if(latestTag != undefined){
+    if(!latestTag){
       console.log(`Found latest tag: ${latestTag}`);
       lastBuildNumber = latestTag.split("/")[1].trim();
     } else {
