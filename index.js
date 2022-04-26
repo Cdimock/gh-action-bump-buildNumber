@@ -22,11 +22,11 @@ const workspace = process.env.GITHUB_WORKSPACE;
     const currentBuildNumber = pkg.buildNumber.toString();
     
     // set git user
-    await runInWorkspace('git', ['config', 'user.name', `"${process.env.GITHUB_USER || 'Automated Version Bump'}"`]);
+    await runInWorkspace('git', ['config', 'user.name', `"${process.env.GITHUB_USER || 'Auto Build Bump'}"`]);
     await runInWorkspace('git', [
       'config',
       'user.email',
-      `"${process.env.GITHUB_EMAIL || 'gh-action-bump-version@users.noreply.github.com'}"`,
+      `"${process.env.GITHUB_EMAIL || 'gh-action-bump-buildNumber@users.noreply.github.com'}"`,
     ]);
 
     let currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
