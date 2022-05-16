@@ -38,6 +38,8 @@ const workspace = process.env.GITHUB_WORKSPACE;
       `"${process.env.GITHUB_EMAIL || 'gh-action-bump-buildNumber@users.noreply.github.com'}"`,
     ]);
 
+    runInWorkspace('git', ['remote', 'show', 'origin']);
+
     let currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
     let isPullRequest = false;
 
