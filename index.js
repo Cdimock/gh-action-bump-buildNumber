@@ -23,6 +23,8 @@ const workspace = process.env.GITHUB_WORKSPACE;
     console.log(commitMessage);
   }
 
+  console.log('Github Actor', process.env.GITHUB_ACTOR);
+
   // GIT logic
   try {
     const currentBuildNumber = pkg.buildNumber.toString();
