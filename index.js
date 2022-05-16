@@ -111,7 +111,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
 
     if (process.env['INPUT_CREATE-PR']){
       console.log('Creating PR....')
-      await runInWorkspace('git', ['push', buildTag]);
+      await runInWorkspace('git', ['push', remoteRepo, buildTag]);
       await runInWorkspace('gh', ['pr', 'create', '--fill', '--base', currentBranch]);
     }
   } catch (e) {
