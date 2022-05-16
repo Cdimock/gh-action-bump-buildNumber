@@ -15,7 +15,12 @@ const workspace = process.env.GITHUB_WORKSPACE;
 (async () => {
   const pkg = getPackageJson();
   const tagPrefix = process.env['INPUT_TAG-PREFIX'] || '';
-  const commitMessage = process.env['INPUT_COMMIT-MESSAGE'] || 'CI: Build Number bumped to {{buildNumber}}';
+  let commitMessage = process.env['INPUT_COMMIT-MESSAGE'] || 'CI: Build Number bumped to {{buildNumber}}';
+
+  if (process.env['INPUT_SKIP-CHECKS']){
+    console.log('Adding [skip-checks: true] to commit message');
+    commitMessage = commitMessage + "\n\n\nskip-checks: true"
+  }
 
   // GIT logic
   try {

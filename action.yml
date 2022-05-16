@@ -31,6 +31,10 @@ inputs:
     description: 'If true, skip pushing any commits or tags created after the version bump'
     default: false
     required: false
+  skip-checks:
+    description: 'If true, skip any required status checks from the repo'
+    default: false
+    required: false
 outputs:
   newTag:
     description: 'The newly created tag'
