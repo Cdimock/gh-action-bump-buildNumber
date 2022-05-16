@@ -109,7 +109,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
     }
 
     if (process.env['INPUT_CREATE-PR']){
-      await runInWorkspace('git', ['request-pull', currentBranch, remoteRepo, buildTag]);
+      await runInWorkspace('gh', ['pr', 'create', '--fill', '--base', currentBranch]);
     }
   } catch (e) {
     logError(e);
