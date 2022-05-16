@@ -74,6 +74,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
 
     if (process.env['INPUT_CREATE-PR']){
       await runInWorkspace('git', ['checkout', '-b', buildTag]);
+      await runInWorkspace('git', ['push', '-u', 'origin', buildTag]);
     } else {
       await runInWorkspace('git', ['checkout', currentBranch]);
     }
@@ -110,7 +111,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
 
     if (process.env['INPUT_CREATE-PR']){
       console.log('Creating PR....')
-      await runInWorkspace('git', ['push', 'origin', `origin/${buildTag}`]);
+      
       await runInWorkspace('gh', ['pr', 'create', '--fill', '--base', currentBranch]);
     }
   } catch (e) {
