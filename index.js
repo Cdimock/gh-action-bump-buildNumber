@@ -99,6 +99,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
     }
 
     const remoteRepo = `https://${githubActor}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
+    console.log('Remote Repo: ', remoteRepo);
     if (process.env['INPUT_SKIP-TAG'] !== 'true') {
       await runInWorkspace('git', ['tag', buildTag]);
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
