@@ -20,6 +20,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
   if (process.env['INPUT_SKIP-CHECKS']){
     console.log('Adding [skip-checks: true] to commit message');
     commitMessage = commitMessage + "\n\n\nskip-checks: true"
+    console.log(commitMessage);
   }
 
   // GIT logic
