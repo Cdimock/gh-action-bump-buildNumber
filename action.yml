@@ -31,8 +31,8 @@ inputs:
     description: 'If true, skip pushing any commits or tags created after the version bump'
     default: false
     required: false
-  skip-checks:
-    description: 'If true, skip any required status checks from the repo'
+  create-pr:
+    description: 'If true, the action will create a PR for the changes, rather than commit them directly'
     default: false
     required: false
 outputs:

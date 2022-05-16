@@ -16,12 +16,6 @@ const workspace = process.env.GITHUB_WORKSPACE;
   const pkg = getPackageJson();
   const tagPrefix = process.env['INPUT_TAG-PREFIX'] || '';
   let commitMessage = process.env['INPUT_COMMIT-MESSAGE'] || 'CI: Build Number bumped to {{buildNumber}}';
-  
-  if (process.env['INPUT_SKIP-CHECKS']){
-    console.log('Adding [skip-checks: true] to commit message');
-    commitMessage = commitMessage + "\n\n\nskip-checks: true"
-    console.log(commitMessage);
-  }
 
   // GIT logic
   try {
@@ -34,9 +28,6 @@ const workspace = process.env.GITHUB_WORKSPACE;
       'user.email',
       `"${process.env.GITHUB_EMAIL || 'gh-action-bump-buildNumber@users.noreply.github.com'}"`,
     ]);
-
-    // console.log('Adding origin');
-    // runInWorkspace('git', ['remote', 'add', 'origin', remoteRepo]);
 
     let currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
     let isPullRequest = false;
@@ -80,7 +71,12 @@ const workspace = process.env.GITHUB_WORKSPACE;
       // First fetch to get updated local version of branch
       await runInWorkspace('git', ['fetch']);
     }
-    await runInWorkspace('git', ['checkout', currentBranch]);
+
+    if (process.env['INPUT_CREATE-PR']){
+      await runInWorkspace('git', ['checkout', '-b', buildTag]);
+    } else {
+      await runInWorkspace('git', ['checkout', currentBranch]);
+    }
     
     //update build Number here
     updateBuildNumber(nextBuildNumber);
@@ -110,6 +106,10 @@ const workspace = process.env.GITHUB_WORKSPACE;
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
         await runInWorkspace('git', ['push', remoteRepo]);
       }
+    }
+
+    if (process.env['INPUT_CREATE-PR']){
+      await runInWorkspace('git', ['request-pull', currentBranch, remoteRepo, buildTag]);
     }
   } catch (e) {
     logError(e);
