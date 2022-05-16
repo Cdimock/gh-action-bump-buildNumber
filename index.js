@@ -16,17 +16,12 @@ const workspace = process.env.GITHUB_WORKSPACE;
   const pkg = getPackageJson();
   const tagPrefix = process.env['INPUT_TAG-PREFIX'] || '';
   let commitMessage = process.env['INPUT_COMMIT-MESSAGE'] || 'CI: Build Number bumped to {{buildNumber}}';
-  const githubActor = process.env['INPUT_GITHUB-ACTOR'] || process.env.GITHUB_ACTOR;
   
-
   if (process.env['INPUT_SKIP-CHECKS']){
     console.log('Adding [skip-checks: true] to commit message');
     commitMessage = commitMessage + "\n\n\nskip-checks: true"
     console.log(commitMessage);
   }
-
-  console.log('Github Actor', githubActor);
-  const remoteRepo = `https://${githubActor}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
 
   // GIT logic
   try {
@@ -103,7 +98,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
       );
     }
 
-    
+    const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
     console.log('Remote Repo: ', remoteRepo);
     if (process.env['INPUT_SKIP-TAG'] !== 'true') {
       await runInWorkspace('git', ['tag', buildTag]);
