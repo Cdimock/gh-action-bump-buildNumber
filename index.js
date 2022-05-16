@@ -17,6 +17,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
   const tagPrefix = process.env['INPUT_TAG-PREFIX'] || '';
   let commitMessage = process.env['INPUT_COMMIT-MESSAGE'] || 'CI: Build Number bumped to {{buildNumber}}';
   const githubActor = process.env['INPUT_GITHUB-ACTOR'] || process.env.GITHUB_ACTOR;
+  
 
   if (process.env['INPUT_SKIP-CHECKS']){
     console.log('Adding [skip-checks: true] to commit message');
@@ -25,6 +26,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
   }
 
   console.log('Github Actor', githubActor);
+  const remoteRepo = `https://${githubActor}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
 
   // GIT logic
   try {
@@ -38,7 +40,8 @@ const workspace = process.env.GITHUB_WORKSPACE;
       `"${process.env.GITHUB_EMAIL || 'gh-action-bump-buildNumber@users.noreply.github.com'}"`,
     ]);
 
-    runInWorkspace('git', ['remote', 'show', 'origin']);
+    console.log('Adding origin');
+    runInWorkspace('git', ['remote', 'add', 'origin', remoteRepo]);
 
     let currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
     let isPullRequest = false;
@@ -100,7 +103,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
       );
     }
 
-    const remoteRepo = `https://${githubActor}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
+    
     console.log('Remote Repo: ', remoteRepo);
     if (process.env['INPUT_SKIP-TAG'] !== 'true') {
       await runInWorkspace('git', ['tag', buildTag]);
