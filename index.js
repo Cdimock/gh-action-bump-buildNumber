@@ -40,8 +40,8 @@ const workspace = process.env.GITHUB_WORKSPACE;
       `"${process.env.GITHUB_EMAIL || 'gh-action-bump-buildNumber@users.noreply.github.com'}"`,
     ]);
 
-    console.log('Adding origin');
-    runInWorkspace('git', ['remote', 'add', 'origin', remoteRepo]);
+    // console.log('Adding origin');
+    // runInWorkspace('git', ['remote', 'add', 'origin', remoteRepo]);
 
     let currentBranch = /refs\/[a-zA-Z]+\/(.*)/.exec(process.env.GITHUB_REF)[1];
     let isPullRequest = false;
