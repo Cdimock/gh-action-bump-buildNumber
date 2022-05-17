@@ -81,6 +81,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
       // to support "actions/checkout@v1"
       if (process.env['INPUT_SKIP-COMMIT'] !== 'true') {
         console.log("Committing Change....");
+        await runInWorkspace('git', ['status']);
         await runInWorkspace('git', ['commit', '-a', '-m', commitMessage.replace(/{{buildNumber}}/g, nextBuildNumber)]);
       }
     } catch (e) {
@@ -93,6 +94,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
     console.log("Preparing tags....");
     const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
     if (process.env['INPUT_SKIP-TAG'] !== 'true') {
+      await runInWorkspace('git', ['status']);
       await runInWorkspace('git', ['tag', buildTag]);
       console.log("Tagged....");
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
