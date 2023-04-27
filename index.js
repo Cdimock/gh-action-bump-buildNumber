@@ -61,6 +61,8 @@ const workspace = process.env.GITHUB_WORKSPACE;
     
     const nextBuildNumber = parseInt(lastBuildNumber) + 1;
     const buildTag = `${tagPrefix}${nextBuildNumber}`;
+    
+     await runInWorkspace('sh', ['-c', `echo "newTag=${buildTag}" >> $GITHUB_OUTPUT`]);
 
 
     console.log(`Last Build Number ${lastBuildNumber}`);
