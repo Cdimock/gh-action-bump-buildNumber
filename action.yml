@@ -31,6 +31,10 @@ inputs:
     description: 'If true, skip pushing any commits or tags created after the version bump'
     default: false
     required: false
+  skip-commit:
+    description: 'Avoid to add a commit after the version is bumped'
+    default: 'false'
+    required: false
 outputs:
   newTag:
     description: 'The newly created tag'
