@@ -96,7 +96,12 @@ const workspace = process.env.GITHUB_WORKSPACE;
       await runInWorkspace('git', ['tag', buildTag]);
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
         await runInWorkspace('git', ['push', remoteRepo, '--follow-tags']);
-        await runInWorkspace('git', ['push', remoteRepo, '--tags']);
+        if (process.env['INPUT_SKIP-COMMIT'] !== 'true') {
+          await runInWorkspace('git', ['push', remoteRepo, '--tags']);
+        } else {
+          await runInWorkspace('git', ['push', remoteRepo, buildTag]);
+        }
+        
       }
     } else {
       if (process.env['INPUT_SKIP-PUSH'] !== 'true') {
