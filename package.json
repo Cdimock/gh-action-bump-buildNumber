@@ -1,6 +1,6 @@
 {
   "name": "gh-action-bump-buildNumber",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "buildNumber": "10",
   "description": "A Github Action used to bump buildNumber in the package.json file",
   "main": "index.js",
