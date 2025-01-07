@@ -1,0 +1,47 @@
+name: Tag Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version number:
+        description: 'Version Number'
+        required: true
+        type: string
+
+jobs:
+  tag-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dump GitHub Context
+        shell: cat {0}
+        run: ${{ toJson(github) }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Set Current Version Number
+        if: steps.version.outputs.app_version != github.event.release.name
+        id: set_current_version
+        run: |
+          npm version ${{ inputs.tag-name }} --force --no-git-tag-version
+          git tag 'v${{ inputs.tag-name }}'
+          echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Increment Patch Version
+        id: increment_version
+        run: |
+          npm version patch --force --no-git-tag-version
+          echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Commit Version Bump
+        env:
+          CI_COMMIT_MESSAGE: Bump version to ${{ steps.increment_version.outputs.version }}
+        run: |
+          git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
+          git push
+
+   
