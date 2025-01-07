@@ -3,8 +3,12 @@ name: Tag Version
 on:
   workflow_dispatch:
     inputs:
-      version number:
+      version-number:
         description: 'Version Number'
+        required: true
+        type: string
+      email:
+        description: 'Email'
         required: true
         type: string
 
@@ -27,8 +31,8 @@ jobs:
         if: steps.version.outputs.app_version != github.event.release.name
         id: set_current_version
         run: |
-          npm version ${{ inputs.tag-name }} --force --no-git-tag-version
-          git tag 'v${{ inputs.tag-name }}'
+          npm version ${{ inputs.version-number }} --force --no-git-tag-version
+          git tag 'v${{ inputs.version-number }}'
           echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Increment Patch Version
@@ -41,6 +45,8 @@ jobs:
         env:
           CI_COMMIT_MESSAGE: Bump version to ${{ steps.increment_version.outputs.version }}
         run: |
+          git config --global user.email ${{ inputs.email }}
+          git config --global user.name ${{ github.actor }}
           git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
           git push
 
