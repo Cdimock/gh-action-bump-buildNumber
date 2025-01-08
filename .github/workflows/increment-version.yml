@@ -48,6 +48,8 @@ jobs:
           git config --global user.email ${{ inputs.email }}
           git config --global user.name ${{ github.actor }}
           git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
-          git push
+          git push origin --follow-tags
+          git push origin 'v${{ inputs.version-number }}'
+          
 
    
