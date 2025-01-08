@@ -28,7 +28,6 @@ jobs:
           ref: main
 
       - name: Set Current Version Number
-        if: steps.version.outputs.app_version != github.event.release.name
         id: set_current_version
         run: |
           npm version ${{ inputs.version-number }} --force --no-git-tag-version
