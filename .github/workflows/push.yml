@@ -26,6 +26,7 @@ jobs:
         uses: 'Cdimock/gh-action-bump-buildNumber@main'
         with:
           tag-prefix: 'build/'
+          skip-commit: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 'cat package.json'
