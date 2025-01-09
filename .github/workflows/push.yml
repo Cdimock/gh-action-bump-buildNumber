@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Wait for 30 seconds
+        run: sleep 30
+        
       - name: 'Checkout source code'
         uses: 'actions/checkout@v3'
         with:
