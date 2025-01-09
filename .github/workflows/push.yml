@@ -11,6 +11,9 @@ jobs:
     name: 'Bump buildNumber on main'
     runs-on: ubuntu-latest
 
+    concurrency:
+      group: bump-version
+
     steps:
       - name: 'Checkout source code'
         uses: 'actions/checkout@v3'
