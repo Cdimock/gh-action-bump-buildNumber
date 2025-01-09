@@ -4,11 +4,15 @@ on:
   push:
     branches:
       - 'main'
+      - 'test'
 
 jobs:
   bump-version:
     name: 'Bump buildNumber on main'
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: bump-version
 
     steps:
       - name: 'Checkout source code'
@@ -22,6 +26,7 @@ jobs:
         uses: 'Cdimock/gh-action-bump-buildNumber@main'
         with:
           tag-prefix: 'build/'
+          skip-commit: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 'cat package.json'
